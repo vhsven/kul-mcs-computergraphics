@@ -1,0 +1,334 @@
+<html>
+  <head>
+    <title>Computer Graphics - Practicum</title>
+    <style type="text/css">
+      body{
+        font-family: Arial, Helvetica, sans-serif;
+        padding-left: 2cm;
+        padding-right: 2cm;
+      }
+      h1 {
+        background: #808080;
+        color: #ffffff;
+        padding-top: 1ex;
+        padding-bottom: 1ex;
+        text-align: center;
+      }
+      h2 {
+        counter-increment: h2c;
+        counter-reset: h3c;
+      }
+      h2:before {
+        display: marker;
+        content: counter(h2c) ". ";
+      }
+      blockquote {
+        padding-top: 2ex;
+        padding-bottom: 2ex;
+        background: #c0c0c0;
+      }
+      div.update {
+        color: #ff0000;
+        text-align: right;
+      }
+        p { text-align: justify; }
+      img { border: 0px; }
+    </style>
+  </head>
+  <body>
+    <h1>Computer Graphics - Practicum</h1>
+    <div class="update">Laatste aanpassing: 20/10/2010</div>
+    <h2>Overzicht</h2>
+    <p>Het practicum is individueel, ieder maakt zijn eigen implementatie. Voor je aan je practicum begint, lees je best eerst aandachtig de gedragscode op Toledo. We verwachten dat iedereen deze strikt volgt. Lees ook regelmatig de announcements en het discussieforum op Toledo.</p>
+    <p>Het practicum bestaat uit 2 delen. De opgave is open, dit wil zeggen dat je veel vrijheid hebt om het probleem op te lossen. Aan het einde van ieder deel moet je je code elektronisch indienen en een verplichte, gequoteerde demonstratie geven. Die quoteringen tellen mee voor respectievelijk 4pt en 3pt van de 20pt van het eindresultaat van dit vak. De quotatie van het practicum gebeurt zowel op het geleverde werk als op de demonstratie ervan. De geschatte tijd (gemiddeld genomen) nodig om het geheel te implementeren is 15 uur voor het eerste en 15 uur voor het tweede deel.  Deze uren zijn <strong>exclusief</strong> de tijd nodig om je cursus te bestuderen.</p>
+    <ul>
+      <li>Deel 1: Implementeer de primitieve basis van beide gangbare rendering architecturen (4pt)
+      <ul>
+        <li>een renderer op basis van <strong>ray tracing</strong>, en</li>
+        <li>een renderer op basis van <strong>rasterisatie</strong>.</li>
+      </ul>
+      Code indienen ten laatste op <b>12 november om 17u00 stipt!</b> Demonstraties 15-19 november, of vroeger op afspraak als je al klaar bent.</li>
+      <li>Deel 2: Implementeer bijkomende functionaliteit voor 1 van de 2 renderers (3pt)<br />
+      Code indienen ten laatste op <b>10 december om 17u00 stipt!</b> Demonstraties 13-17 december.</li>
+    </ul>
+    <h2>Opgave Deel 1: Implementeer beide primitieve basisrenderers</h2>
+    <h3>Ray Tracing</h3>
+    <p>De basisopgave van de primitieve ray tracer omvat het implementeren van:</p>
+    <blockquote>
+      <ul>
+        <li>het genereren van oogstralen (h.10.2 p.203 2nd ed./h.9.2 p.153 1st ed.)</li>
+        <li>het intersecteren van een straal en een driehoek (h.10.3.2 p.206 2nd ed./h.9.3.2 p.156 1st ed.)</li>
+        <li>het correct visualiseren van een sc&egrave;ne (visibiliteit bepalen) (h.10.4 p.209 2nd ed./h.9.4 p.159 1st ed.)</li>
+        <li>diffuse shading (h.9.1.1 p.91 2nd ed./h.8.1.1 p.141 1st ed.)</li>
+        <li>de mogelijkheid om een puntlichtbron in je sc&egrave;ne te hebben</li>
+        <li>het implementeren van de <a href="#dataformaten">dataformaten</a> waarmee je je scenes kan voorstellen.</li>
+      </ul>
+    </blockquote>
+    <p>Er zijn verschillende manieren om aan deze opgave te beginnen. De werkwijze die we voorstellen is slechts 1 van de mogelijke werkwijzen.</p>
+    <ol>
+      <li>Bestudeer de relevante delen van je cursus.</li>
+      <li>Download het <a href="#hulppakket">hulppakket</a>.  Bestudeer dit hulppakket zodat je het later zonder problemen kan gebruiken.</li>
+      <li>Implementeer een straal klasse en eventuele hulpklassen zoals punt, vector en matrix.  Zorg dat deze basisklassen correct werken, schrijf testprogramma's die dit nagaan.  Een bug in je basis kan je later veel tijd kosten.</li>
+      <li>Implementeer de klasse die driehoek voorstelt.</li>
+      <li>Implementeer de driehoek-straal intersectie.  Test deze grondig.  Je kan ze testen op verschillende manieren (probeer beide!).  Je kan ze numeriek testen, met stralen waarvan je weet die ze snijden (of juist niet) en verifieer de uitkomst.  Je kan ze visueel testen door parallelle stralen door de pixels van je scherm te schieten en te kijken of de driehoek wordt gesneden. Je plot een constante kleur indien je het object raakt.</li>
+      <li>Implementeer een projectief cameramodel (de stralen zijn niet meer parallel).  Je object zou kleiner moeten worden als je het verder van het oog afzet.</li>
+      <li>Implementeer de visibiliteitstest.  Speel met objecten met verschillende kleuren en kijk of de pixels de juiste kleuren krijgen.</li>
+      <li>Implementeer diffuse flat shading en een puntlichtbron.</li>
+    </ol>
+    <h3>Rasterisatie</h3>
+    <p>Het is de bedoeling dat je zelf alle algoritmen implementeert en dus geen bibliotheken zoals OpenGL of Direct3D gebruikt. De basisopgave van de primitieve rasterizer omvat het implementeren van:</p>
+    <blockquote>
+      <ul>
+        <li>het rasteriseren van een driehoek (h.3.6 p.63 2nd ed./h.3.6 p.60 1st ed.)</li>
+        <li>perspectieve view transformatie (h.7.3 p.166 2nd ed./h.6.3 p.116 1st ed.)</li>
+        <li>visibiliteitsbepaling m.b.v. het Z-buffer algorithme (h.8.2 p.186 2nd ed./h.7.2 p.135 1st ed.)</li>
+        <li>diffuse shading (h.9.1.1 p.191 2nd ed./h.8.1.1 p.141 1st ed.)</li>
+        <li>de mogelijkheid om een puntlichtbron in je sc&egrave;ne te hebben</li>
+        <li>het implementeren van de <a href="#dataformaten">dataformaten</a> waarmee je je scenes kan voorstellen.</li>
+      </ul>
+    </blockquote>
+    <p>Er zijn verschillende manieren om aan deze opgave te beginnen.  De werkwijze die we voorstellen is slechts 1 van de mogelijke werkwijzen.</p>
+    <ol>
+      <li>Bestudeer de relevante delen van je cursus.</li>
+      <li>Download het <a href="#hulppakket">hulppakket</a>.  Bestudeer dit hulppakket zodat je het later zonder problemen kan gebruiken.</li>
+      <li>Implementeer de rasterisatie van een driehoek.  Test deze grondig.  Je kan die zowel numeriek als visueel testen.  Om ze visueel te testen kan je de driehoek visualiseren door de Z-coordinaat te negeren (orthografische projectie!) en de pixel met een constante kleur te plotten.</li>
+      <li>Implementeer de Z-buffer.  Test deze grondig (2 driehoeken met verschillende kleuren rasteriseren).  Je kan dit wederom visueel doen met een orthografische projectie.</li>
+      <li>Implementeer een projectief cameramodel.</li>
+      <li>Implementeer diffuse flat shading en een puntlichtbron.</li>
+    </ol>
+    <br />
+    <p>Toets je implementatie met onze voorbeeld renderings! (Zie Sectie 4. Dataformaten). Voor de demonstratie van dit eerste deel zullen we je vragen een basis sc&egrave;ne te visualiseren. We verwachten dat je ray tracer en rasterizer identiek dezelfde afbeelding maken van deze scene. We beoordelen het resultaat op kwaliteit en snelheid (zie Snelheidscompetitie).</p>
+    <br />
+
+
+    <h2>Opgave Deel 2: Implementeer bijkomende functionaliteit voor 1 van de 2 renderers</h2>
+    <p>Vanaf nu werk je verder aan 1 van je 2 renderers. Implementeer de verplichte bijkomende functionaliteit, en vul aan met vrij te kiezen functionaliteit voor in totaal minstens 5 sterren (<img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" />).</p>
+    <h3>Ray Tracing</h3>
+    <p>Verplichte bijkomende functionaliteit:</p>
+    <blockquote>
+      <ul>
+        <li>Phong shading (h.9.2.1 p.194 2nd ed./h.8.2.1 p.144 1st ed.)</li>
+        <li>de mogelijkheid om getransformeerde objecten in je sc&egrave;ne te hebben m.b.v. een sc&egrave;ne graph (h.13.3 p.273 2nd ed./h.12.3 p.224 1st ed.)</li>
+        <li>Implementatie van schaduwen (h.10.5 p.211 2nd ed./h.9.5 p.161 1st ed.)</li>
+        <li>Minstens 1 acceleratiestructuur (vb: hierarchische omhullende volumes of uniforme opdeling van de ruimte of een BSP tree) (h.10.9 p.218 2nd ed./h.9.9 p.167 1st ed.)</li>
+      </ul>
+    </blockquote>
+    <p>Vrij te kiezen functionaliteit:</p>
+    <blockquote>
+      <ul>
+        <li>Antialiasing (h.10.11.1 p.230 2nd ed./h.9.11.1 p.183 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>2D Textuur mapping (h.11.2-10.3 p.246 2nd ed./h.10.2-10.3 p.198 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Environment mapping (h.11.7 p.253 2nd ed./h.10.7 p.205 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Bump mapping (h.11.5 p.252 2nd ed./h.10.5 p.204 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Constructive Solid Geometry (h.10.10 p.xxx 2nd ed./h.9.10 p.182 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Bijkomende geometrische primitieven: 2 uit {bol, cylinder, schijf, kegel, ...} of 1 uit {torus, fractal, ...} (h.10.3.1 p.205 2nd ed./h.9.3.1 p.155 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Oppervlakte lichtbronnen en zachte schaduwen (h.10.11.2 p.231 2nd ed./h.9.11.1 p.183 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Recursive raytracing met speculaire reflectie en refractie (h.10.6-10.7 p.212 2nd ed./h.9.6-9.7 p.161 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        
+        <li>Glossy reflectie (h.10.11.4 p.234 2nd ed./h.9.11.4 p.187 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Depth of field (h.10.11.3 p.233 2nd ed./h.9.11.3 p.186 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Motion blur (h.10.11.5 p.xxx 2nd ed./h.9.11.5 p.188 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+      </ul>
+    </blockquote>
+    <h3>Rasterisatie</h3>
+    <p>Verplichte bijkomende functionaliteit:</p>
+    <blockquote>
+      <ul>
+        <li>Gouraud interpolatie (p.63 2nd ed./p.60 laatste lijn 1st ed.)</li>
+        <li>Phong shading (h.9.2.1 p.194 2nd ed./h.8.2.1 p.144 1st ed.)</li>
+        <li>de mogelijkheid om getransformeerde objecten in je sc&egrave;ne te hebben m.b.v. een sc&egrave;ne graph (h.13.3 p.273 2nd ed./h.12.3 p.224 1st ed.)</li>
+        <li>Implementatie van een BSP tree (h.8.1 p.177 2nd ed./h.7.1 p.127 1st ed.)</li>
+      </ul>
+    </blockquote>
+    <p>Vrij te kiezen functionaliteit:</p>
+    <blockquote>
+      <ul>
+        <li>Camera interactie (translatie, rotatie van de camera zoals bvb. in Quake) (h.7 p.159 2nd ed./h.6 p.109 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Environment mapping (h.11.7 p.253 2nd ed./h.10.7 p.205 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Antialiasing.(h.3.7 p.67) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Meerdere lichtbronnen (h.9 p.141 2nd ed./h.8 p.141 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Phong normaal interpolatie (h.9.2.2 p.197 2nd ed./h.8.2.2 p.146 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Perspectief correcte 2D texturen (h.11.4.1 p.250 2nd ed./h.10.4.1 p.201 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Bump mapping (h.11.5 p.252 2nd ed./h.10.5 p.204 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Efficiente clipping en culling (h.12.1-12.4 p.259 2nd ed./h.11.1-11.4 p.209 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+        <li>Shadow mapping (h.11.8 p.255 2nd ed./h.10.8 p.206 1st ed.) <img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /><img src="http://graphics.cs.kuleuven.be/courses/G0Q66a/star.png" /></li>
+      </ul>
+    </blockquote>
+
+
+
+    <h2><a name="dataformaten" />Dataformaten</h2>
+    <p>Om jullie niet een dataformaat van niets af te laten schrijven, hebben we voor jullie een basis <a href="xmlformaat.html">XML formaat</a> en parser voorzien en enkele <a href="invoerformaat.html">.obj-bestanden</a> zodat je gemakkelijk kan experimenteren. Out of the box leest de parser enkel een XML bestand in en drukt dit in de console weer af. Het is aan jullie om hiervan een sc&egrave;ne graph in het geheugen op te stellen.</p>
+
+    <p>We hebben de opgegeven modellen ook zelf gevisualiseerd ter referentie. De geometrie is telkens ongetransformeerd met diffuus witte shading. Het is de bedoeling dat jullie ray tracer en rasterizer dezelfde resultaten kan genereren. De objecten moeten exact dezelfde positie en orientatie hebben. De kleur mag verschillen.</p>
+    
+    <p>Algemene configuratie:</p>
+    <ul>
+    <li>Camera positie: (zie onder)</li>
+    <li>Kijkrichting: naar oorsprong</li>
+    <li>Up-richting: positieve Y-as</li>
+    <li>Field-of-view: 45 graden</li>
+    <li>1 puntlichtbron, wit, op dezelfde positie als de camera.</li>
+    <li>Resolutie: 512x512</li>
+    <li>Antialiasing: nee (1 straal door het midden van iedere pixel)</li>
+    </ul>
+
+    <table>
+    <tr>
+    <td><a href="images/cone.png"><img src="images/cone_thumb.png" /></a></td>
+    <td><a href="images/cube.png"><img src="images/cube_thumb.png" /></a></td>
+    <td><a href="images/cylinder.png"><img src="images/cylinder_thumb.png" /></a></td>
+    <td><a href="images/plane.png"><img src="images/plane_thumb.png" /></a></td>
+    <td><a href="images/sphere.png"><img src="images/sphere_thumb.png" /></a></td>
+    <td><a href="images/torus.png"><img src="images/torus_thumb.png" /></a></td>
+    <td><a href="images/teapot.png"><img src="images/teapot_thumb.png" /></a></td>
+    </tr>
+    <caption style="text-align: left;">Camera positie (5, 5, 5):</caption>
+    </table>
+    <table>
+    <tr>
+    <td><a href="images/bunny.png"><img src="images/bunny_thumb.png" /></a></td>
+    <td><a href="images/treebranches.png"><img src="images/treebranches_thumb.png" /></a></td>
+    <td><a href="images/treeleaves.png"><img src="images/treeleaves_thumb.png" /></a></td>
+    <td><a href="images/triceratops.png"><img src="images/triceratops_thumb.png" /></a></td>
+    <td><a href="images/venus.png"><img src="images/venus_thumb.png" /></a></td>
+    </tr>
+    <caption style="text-align: left;">Camera positie (10, 10, 10):</caption>
+    </table>
+    <table>
+    <tr>
+    <td><a href="images/table-fixed.png"><img src="images/table-fixed_thumb.png" /></a></td>
+    <td><a href="images/tablecloth.png"><img src="images/tablecloth_thumb.png" /></a></td>
+    </tr>
+    <caption style="text-align: left;">Camera positie (15, 15, 15):</caption>
+    </table>
+
+
+    <h2><a name="hulppakket" />Hulppakket</h2>
+    <p>Je krijgt van ons de klasse <b>CgPanel</b>, die je op weg kan helpen. Deze klasse laat toe om pixels op het scherm te tekenen en het resulterende beeld weg te schrijven naar een png bestand. Ze erft over van de klasse JPanel en kan dus eenvoudig in een JFrame worden toegevoegd. Het gebruik van de klasse wordt geillustreerd in <b>Demo</b>.</p>
+    <p>Voor de XML parser worden een aantal basisklassen, zoals een klasse <b>Point3f</b>, een klasse <b>Vector3f</b>, een klasse <b>Color3f</b>, en nog een aantal nuttige klassen voorzien. De klasse <b>Parser</b> is in staat om SDL bestanden in te lezen. Deze klasse werkt samen met de interface <b>ParserHandler</b>. Voor elk element in het invoerformaat definieert <b>ParserHandler</b> twee methodes. Bijvoorbeeld: voor het element <b>DirectionalLight</b> definieert <b>ParserHandler</b> de methodes:</p>
+    <ul>
+      <li><code>public void startDirectionalLight(Vector3f direction, float intensity, Color3f color, String name) throws Exception;</code></li>
+      <li><code>public void endDirectionalLight() throws Exception;</code></li>
+    </ul>
+    <p>De parser overloopt het hele bestand en roept telkens de gepaste methodes aan van de bij de Parser geregistreerde ParserHandler. Elke klasse die de interface <b>ParserHandler</b> implementeert kan zich registreren bij de Parser als <b>ParserHandler.</b> De klasse <b>EchoParserHandler</b> is een klasse die de interface <b>ParserHandler</b> implementeert, en alle elementen afdrukt op de console. Deze wordt intern in de parser gebruikt en heb je niet nodig. De klasse <b>ParserUtils</b> herbergt een aantal hulpmethodes voor de parser. De klasse <b>SceneBuilder</b> implementeert de interface <b>ParserHandler</b> en zal gebruikt moeten worden om de scenegraph op te bouwen.</p>
+    <p>Wij hebben het basispakket gecompileerd en getest met de Java SDK 1.4.2 en 1.5.0. Je bent vrij het uit te breiden of aan te passen. De linuxversie kan je <a href="soft/practicum1_linux.tgz">hier</a> downloaden, de windowsversie <a href="soft/practicum1_win.zip">hier</a>.</p>
+
+
+
+    <h2>Programmeertalen en bibliotheken</h2>
+    <p>Het hulppakket is geschreven in Java, omdat we verwachten dat de meeste studenten deze taal zullen gebruiken voor dit practicum.</p>
+    <p>Als je een andere gangbare, objectgerichte programmeertaal wil gebruiken, zoals C++ of C#, vraag je individueel toestemming aan een assistent (via mail of Toledo). Verantwoord je keuze en toon aan dat je voldoende ervaring hebt met deze taal om het practicum te kunnen voltooien.</p>
+    <p>Buiten het hulppakket en de Java SDK standaardbibliotheek mag je in principe geen andere bibliotheken gebruiken. Als je voor gelijkaardige functionaliteit, een andere bibliotheek wil gebruiken, zoals een GUI-toolkit of invoer/uitvoer van bestanden, vraag je individueel toestemming aan een assistent (via mail of Toledo). Verantwoord je keuze. Alle graphics-functionaliteit, zoals transformatiematrices, het Bresenham-algoritme, of intersecties, moet je natuurlijk zelf implementeren.</p>
+
+
+
+
+    <h2>Code indienen en demonstratie</h2>
+    <ul>
+      <li>Aan het einde van ieder deel wordt verwacht dat je je broncode inlevert. De deadline is
+      <ul>
+        <li>voor het eerste deel: op <strong>vrijdag 12 november om 17u00 stipt!</strong></li>
+        <li>voor het tweede deel: op <strong>vrijdag 10 december om 17u00 stipt!</strong></li>
+      </ul>
+      Er wordt van je verwacht dat je een zip-bestand met bestandsnaam <code>naam_voornaam_studentennr.zip</code> doorstuurt naar <a href="mailto:jurgen.laurijssen@cs.kuleuven.be">Jurgen Laurijssen</a>. De maximale toegestane grootte van dit zip-bestand is <strong>2 megabyte</strong>. Dit zip-bestand bevat volgende directory- en bestandsstructuur:
+      <ul>
+        <li><code>naam_voornaam_studentennr</code> (de top directory)</li>
+        <ul>
+          <li><code>src</code> (hierin staat de niet-gecompileerde code van je project)</li>
+          <li><code>var</code> (extra bestanden die je zou nodig hebben om je project te compileren of uit te voeren, plaats hier natuurlijk niet Eclipse e.d. in)</li>
+        </ul>
+      </ul>
+      Plaats geen sc&egrave;ne-bestanden in de zip-file (dus ook geen obj bestanden), zorg er wel voor dat je je <strong>sc&egrave;ne-bestanden en enkele voorgerenderde beeldjes bij je hebt tijdens de verdediging</strong>. Er wordt van je verwacht dat je je project kan compileren en uitvoeren m.b.v. enkel dit zip-bestand, je sc&egrave;ne-bestanden, en de standaard geinstalleerde software in de PC-klassen (Java SDK, Eclipse e.d.). <strong>Probeer dit dan ook in de PC-klassen!</strong> Het is niet toegestaan om tijdens de demonstratie andere code te gebruiken.<br/>
+      Voor de demonstratie van het eerste deel zullen we je vragen een basis sc&egrave;ne te visualiseren. We verwachten dat je ray tracer en rasterizer identiek dezelfde afbeelding maken van deze scene. We beoordelen het resultaat op kwaliteit en snelheid (zie snelheidscompetitie).
+      </li>
+      <li>De gequoteerde demonstraties zullen doorgaan
+      <ul>
+        <li>voor het eerste deel: in de week van <strong>9-13 november</strong>, of vroeger op afspraak als je al klaar bent</li>
+        <li>voor het tweede deel: in de week van <strong>14-18 december</strong>.</li>
+      </ul>
+      Je moet je hiervoor telkens inschrijven aan de valven in gebouw 200A op het gelijkvloers. De inschrijvingslijsten zullen daar beschikbaar zijn 1 week op voorhand. Wie zich niet op tijd inschrijft vraagt een nul aan!</li>
+    </ul>
+
+
+    <h2>Competitie</h2>
+    <p>Er zijn filmtickets te winnen in 3 verschillende disciplines. De winnaars worden gekozen door een panel van experten uit de Vlaamse graphics-industrie.</p>
+    <h3>Featurecompetitie</h3>
+    <p>Implementeer de coolste of origineelste functionaliteit.</p>
+    <table>
+    <tr>
+    <td><a href="images/samdecrock.png"><img src="images/samdecrock_thumb.png" /></a></td>
+    <td><a href="images/thomas_debodt1.jpg"><img src="images/thomas_debodt1_thumb.png" /></a></td>
+    </tr>
+    </table>
+    <h3>Scenecompetitie</h3>
+    <p>Modelleer de meest adembenemende sc&egrave;ne.</p>
+    <table>
+    <tr>
+    <td><a href="images/seasons_spring_high2.png"><img src="images/seasons_spring_high2_thumb.png" /></a></td>
+    <td><a href="images/stevige_teepot.jpg"><img src="images/stevige_teepot_thumb.png" /></a></td>
+    </tr>
+    </table>
+    <h3>Snelheidscompetitie</h3>
+    <p>Render onze opgelegde sc&egrave;ne het snelst.</p>
+    <h4>Deel 1</h4>
+    <p>Tijdens de demonstraties van het eerste deel van het practicum zullen we je vragen om onderstaande sc&egrave;ne te renderen. We zullen onder andere je "time-to-image" meten, de rendertijd nadat de sc&egrave;ne is ingelezen tot het einde van de rendering (dus exclusief het inlezen/uitschrijven van bestanden of het tonen van de afbeelding). Je neemt dus automatisch deel aan dit deel van de snelheidscompetitie.</p>
+    <table>
+    <tr>
+    <td valign="top" width="150px">
+    <a href="images/cornellbox.png" target="_self"><img src="images/cornellbox_thumb.png" /></a>
+    </td>
+    <td>
+    <p>Sc&egrave;ne:</p>
+    <ul>
+      <li><a href="soft/cornellbox.obj" >cornellbox.obj</a>, diffuus wit, geen transformaties</li>
+      <li>camera
+      <ul>
+        <li>positie: (278, 273, -800)</li>
+        <li>kijkrichting: positieve Z-as</li>
+        <li>up-richting: positieve Y-as</li>
+        <li>field-of-view: 37.8 graden</li>
+      </ul>
+      </li>
+      <li>resolutie: 512x512</li>
+      <li>1 puntlichtbron, wit, op positie (278, 548.8, 279.5)</li>
+      <li>antialiasing: nee (1 straal door het midden van iedere pixel)</li>
+      <li>computer: 1 core, dus 1 thread, op de recentste Core2Duo computers in de PC-klassen</li>
+    </ul>
+    </td>
+    </tr>
+    </table>
+    <h4>Deel 2</h4>
+    <p>Om deel te nemen aan de tweede snelheidscompetitie post je op het discussieforum de "time-to-image" voor jouw renderer: de rendertijd inclusief eventueel de opbouwtijd van de acceleratiestructuur, maar exclusief het inlezen/uitschrijven van bestanden of het tonen van de afbeelding. Uiteraard moet je die rendertijd live kunnen reproduceren tijdens de demonstraties, en mogen er geen bugs in het resulterende prentje zichtbaar zijn. We hebben ook interesse in de gebruikte technieken, en meet indien mogelijk ook apart de opbouwtijd van de acceleratiestructuur, intersectie- of rasterizingtijd, en shadingtijd.</p>
+    <table>
+    <tr>
+    <td valign="top" width="150px">
+    <a href="images/speed.png" target="_self"><img src="images/speed_thumb.png" /></a>
+    </td>
+    <td>
+    <p>Sc&egrave;ne:</p>
+    <ul>
+      <li><a href="soft/treebranches.obj.gz">treebranches.obj</a>, diffuus bruin</li>
+      <li><a href="soft/treeleaves.obj.gz">treeleaves.obj</a>, diffuus groen + Phong</li>
+      <li><a href="soft/plane.obj">plane.obj</a>, diffuus groen, gescaleerd x100</li>
+      <li>25 puntlichtbronnen, wit, posities: X,Z={9, 9.25, 9.5, 9.75, 10}, Y=10</li>
+      <li>camera
+      <ul>
+        <li>positie: 0, 3.5, 10</li>
+        <li>kijkrichting: negatieve Z-as</li>
+        <li>up-richting: positieve Y-as</li>
+        <li>field-of-view: 45 graden</li>
+      </ul>
+      </li>
+    </ul>
+    <p>Opties:</p>
+    <ul>
+      <li>resolutie: 512x512</li>
+      <li>antialiasing: nee (1 straal door het midden van iedere pixel)</li>
+      <li>computer: 1 core, dus 1 thread, op de recentste Core2Duo computers in de PC-klassen</li>
+    </ul>
+    </td>
+    </tr>
+    </table>
+  </body>
+</html>
